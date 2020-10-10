@@ -8,8 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 COPY --from=BUILD_IMAGE /etc/apt/sources.list  /etc/apt/sources.list
 RUN apt update
 RUN apt-get -qq install apt-build
-RUN apt-build update
-RUN apt-build upgrade -y
+RUN apt-get upgrade -y
 COPY build.sh .
 RUN chmod +x build.sh
 ENTRYPOINT ["bash", "build.sh"]
