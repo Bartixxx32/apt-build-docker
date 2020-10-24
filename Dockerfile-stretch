@@ -1,0 +1,12 @@
+FROM alpine:edge AS BUILD_IMAGE
+ARG DEBIAN_FRONTEND=noninteractive
+COPY sources.list-stretch /etc/apt/sources.list
+FROM debian:stretch
+ARG DEBIAN_FRONTEND=noninteractive
+COPY --from=BUILD_IMAGE /etc/apt/sources.list  /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get -qq install apt-build
+RUN apt-get upgrade -y
+COPY build.sh .
+RUN chmod +x build.sh
+ENTRYPOINT ["bash", "build.sh"]
