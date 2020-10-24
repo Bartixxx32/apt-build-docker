@@ -1,0 +1,14 @@
+deb http://it.archive.ubuntu.com/ubuntu/ groovy main universe restricted multiverse
+deb-src http://it.archive.ubuntu.com/ubuntu/ groovy main universe restricted multiverse
+
+deb http://security.ubuntu.com/ubuntu groovy-security main universe restricted multiverse
+deb-src http://security.ubuntu.com/ubuntu groovy-security main universe restricted multiverse
+
+deb http://it.archive.ubuntu.com/ubuntu/ groovy-updates main universe restricted multiverse
+deb-src http://it.archive.ubuntu.com/ubuntu/ groovy-updates main universe restricted multiverse
+
+deb http://it.archive.ubuntu.com/ubuntu groovy-backports main restricted universe multiverse
+deb-src http://it.archive.ubuntu.com/ubuntu groovy-backports main restricted universe multiverse
+
+deb http://archive.canonical.com/ubuntu groovy partner
+deb-src http://archive.canonical.com/ubuntu groovy partner

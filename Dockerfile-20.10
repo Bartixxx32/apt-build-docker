@@ -1,0 +1,11 @@
+FROM alpine:edge AS BUILD_IMAGE
+COPY sources.list-20.10 /etc/apt/sources.list
+FROM ubuntu:20.10
+ARG DEBIAN_FRONTEND=noninteractive
+COPY --from=BUILD_IMAGE /etc/apt/sources.list  /etc/apt/sources.list
+RUN apt update
+RUN apt-get -qq install apt-build
+RUN apt-get upgrade -y
+COPY build.sh .
+RUN chmod +x build.sh
+ENTRYPOINT ["bash", "build.sh"]
