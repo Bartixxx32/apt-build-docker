@@ -1,4 +1,4 @@
-name: buildx
+name: 20.04
 
 on:
   pull_request:
