@@ -1,62 +1,36 @@
 name: stretch
 
 on:
-  pull_request:
-    branches: master
   push:
     branches: master
 
 jobs:
-  buildx:
-    runs-on: ubuntu-latest
+  multi:
+    runs-on: Ubuntu-20.10
     steps:
       -
         name: Checkout
         uses: actions/checkout@v2
       -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
         name: Set up Docker Buildx
-        uses: crazy-max/ghaction-docker-buildx@v3
+        uses: docker/setup-buildx-action@v1
       -
-        name: Cache Docker layers
-        uses: actions/cache@v2
-        id: cache
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-stretch-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-stretch
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Docker Buildx (build)
-        run: |
-          docker buildx build \
-            --cache-from "type=local,src=/tmp/.buildx-cache" \
-            --cache-to "type=local,dest=/tmp/.buildx-cache" \
-            --platform linux/amd64 \
-            --output "type=image,push=false" \
-            --tag bartixxx32/apt-build:stretch \
-            --file ./Dockerfile-stretch .
-      -
-        name: Docker Login
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
-      -
-        name: Docker Buildx (push)
-        run: |
-          docker buildx build \
-            --cache-from "type=local,src=/tmp/.buildx-cache" \
-            --platform linux/amd64 \
-            --output "type=image,push=true" \
-            --tag bartixxx32/apt-build:stretch \
-            --file ./Dockerfile-stretch .
-      -
-        name: Docker Check Manifest
-        run: |
-          docker run --rm mplatform/mquery crazymax/diun:latest
-      -
-        name: Clear
-        if: always()
-        run: |
-          rm -f ${HOME}/.docker/config.json
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile-stretch
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          push: true
+          tags: |
+            bartixxx32/cdapl-dl:stretch
+
