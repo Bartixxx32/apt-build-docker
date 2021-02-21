@@ -6,7 +6,7 @@ on:
 
 jobs:
   multi:
-    runs-on: Ubuntu-20.10
+    runs-on: Ubuntu-20.04
     steps:
       -
         name: Checkout
