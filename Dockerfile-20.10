@@ -1,6 +1,6 @@
 FROM alpine:edge AS BUILD_IMAGE
 COPY sources.list-20.10 /etc/apt/sources.list
-FROM ubuntu:20.10
+FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 COPY --from=BUILD_IMAGE /etc/apt/sources.list  /etc/apt/sources.list
 RUN apt-get update
