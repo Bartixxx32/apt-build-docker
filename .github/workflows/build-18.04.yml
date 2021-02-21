@@ -32,4 +32,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            bartixxx32/cdapl-dl:18.04
+            bartixxx32/apt-build:18.04

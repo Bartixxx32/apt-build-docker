@@ -32,4 +32,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            bartixxx32/cdapl-dl:bullseye
+            bartixxx32/apt-build:bullseye
