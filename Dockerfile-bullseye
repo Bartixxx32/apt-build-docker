@@ -5,7 +5,7 @@ FROM debian:bullseye
 ARG DEBIAN_FRONTEND=noninteractive
 COPY --from=BUILD_IMAGE /etc/apt/sources.list  /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get -qq install apt-build
+RUN apt-get -qq install --no-install-recommends apt-build
 RUN apt-get upgrade -y
 COPY build.sh .
 RUN chmod +x build.sh
