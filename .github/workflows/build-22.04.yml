@@ -1,4 +1,4 @@
-name: 20.10
+name: 22.04
 
 on:
   push:
