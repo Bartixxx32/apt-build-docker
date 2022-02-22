@@ -1,0 +1,16 @@
+FROM ubuntu:14.04
+
+RUN apt-get clean
+RUN apt-get autoclean
+RUN rm -rf /var/lib/apt/lists/
+RUN apt update
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get -qq install --no-install-recommends apt-build
+RUN apt-get upgrade -y
+RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+RUN apt update
+COPY build.sh .
+RUN chmod +x build.sh
+ENTRYPOINT ["bash", "build.sh"]
