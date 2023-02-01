@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:23.04
 
 RUN apt-get clean
 RUN apt-get autoclean
